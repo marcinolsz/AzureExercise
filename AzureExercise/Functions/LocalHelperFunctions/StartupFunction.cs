@@ -13,9 +13,9 @@ namespace AzureExercise.Functions.LocalHelperFunctions
         [FunctionName(nameof(StartupFunction))]
         public async Task<IActionResult> Startup([HttpTrigger("get", Route = "startup")] HttpRequest req)
         {
-            var containerClient = new BlobContainerClient("UseDevelopmentStorage=true", "private-container");
+            var containerClient = new BlobContainerClient("UseDevelopmentStorage=true", "customer-container");
             await containerClient.CreateIfNotExistsAsync();
-            var queueClient = new QueueClient("UseDevelopmentStorage=true", "myqueue-items");
+            var queueClient = new QueueClient("UseDevelopmentStorage=true", "customer-queue");
             await queueClient.CreateIfNotExistsAsync();
 
             return new OkObjectResult("Startup finished, everything in place!");

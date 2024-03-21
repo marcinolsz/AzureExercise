@@ -16,7 +16,7 @@ namespace AzureExercise.Functions.LocalHelperFunctions
         [FunctionName(nameof(PublishMessageFunction))]
         public async Task<IActionResult> PublishMessage([HttpTrigger("get", Route = "publishMessage")] HttpRequest req)
         {
-            var queueClient = new QueueClient("UseDevelopmentStorage=true", "myqueue-items");
+            var queueClient = new QueueClient("UseDevelopmentStorage=true", "customer-queue");
 
             var serializedMessage = JsonSerializer.Serialize(new Customer("Marcin", "Olszewski", 13));
 
