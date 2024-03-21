@@ -14,7 +14,7 @@ namespace AzureExercise.Application
         public Customer Person { get; }
         public PushToBlobCommand(Customer person)
         {
-            Person = person ?? throw new ArgumentNullException();
+            Person = person ?? throw new ArgumentNullException(nameof(person));
         }
 
         public class PushToBlobCommandHandler : IRequestHandler<PushToBlobCommand>
@@ -23,7 +23,7 @@ namespace AzureExercise.Application
 
             public PushToBlobCommandHandler(BlobContainerClient containerClient)
             {
-                _containerClient = containerClient ?? throw new ArgumentNullException();
+                _containerClient = containerClient ?? throw new ArgumentNullException(nameof(containerClient));
             }
 
             public async Task Handle(PushToBlobCommand request, CancellationToken cancellationToken)

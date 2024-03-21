@@ -17,8 +17,8 @@ namespace AzureExercise.Functions
             IMediator mediator,
             ILogger<QueueFunction> logger)
         {
-            _mediator = mediator ?? throw new ArgumentNullException();
-            _logger = logger ?? throw new ArgumentNullException();
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [FunctionName(nameof(QueueFunction))]

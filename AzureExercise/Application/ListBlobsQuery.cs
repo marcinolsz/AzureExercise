@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using MediatR;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace AzureExercise.Application
 
             public ListBlobsQueryHandler(BlobContainerClient blobContainerClient)
             {
-                _blobContainerClient = blobContainerClient;
+                _blobContainerClient = blobContainerClient ?? throw new ArgumentNullException(nameof(blobContainerClient));
             }
 
             public async Task<string[]> Handle(ListBlobsQuery request, CancellationToken cancellationToken)
