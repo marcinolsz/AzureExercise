@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using AzureExercise.Application.Requests;
+using AzureExercise.Models;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,11 @@ namespace AzureExercise.Application.Handlers
 
         public async Task<string[]> Handle(ListBlobsQueryRequest request, CancellationToken cancellationToken)
         {
+            if (!await _blobContainerClient.ExistsAsync())
+            {
+                throw new ContainerNotFoundException("The container could not be contacted", _blobContainerClient.Name);
+            }
+
             var blobNames = new List<string>();
 
             await foreach (var blobItem in _blobContainerClient.GetBlobsAsync())

@@ -1,5 +1,6 @@
 ﻿using Azure.Storage.Blobs;
 using AzureExercise.Application.Requests;
+using AzureExercise.Models;
 using MediatR;
 using System;
 using System.IO;
@@ -11,17 +12,22 @@ namespace AzureExercise.Application.Handlers
 {
     public class PushToBlobCommandHandler : IRequestHandler<PushToBlobCommandRequest>
     {
-        private readonly BlobContainerClient _containerClient;
+        private readonly BlobContainerClient _blobContainerClient;
 
         public PushToBlobCommandHandler(BlobContainerClient containerClient)
         {
-            _containerClient = containerClient ?? throw new ArgumentNullException(nameof(containerClient));
+            _blobContainerClient = containerClient ?? throw new ArgumentNullException(nameof(containerClient));
         }
 
         public async Task Handle(PushToBlobCommandRequest request, CancellationToken cancellationToken)
         {
+            if (!await _blobContainerClient.ExistsAsync())
+            {
+                throw new ContainerNotFoundException("The container could not be contacted", _blobContainerClient.Name);
+            }
+
             var dataToPush = JsonSerializer.SerializeToUtf8Bytes(request.Customer);
-            var blobClient = _containerClient.GetBlobClient(GenerateBlobName());
+            var blobClient = _blobContainerClient.GetBlobClient(GenerateBlobName());
             using var memoryStream = new MemoryStream(dataToPush);
             await blobClient.UploadAsync(memoryStream);
 

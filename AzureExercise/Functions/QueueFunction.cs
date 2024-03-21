@@ -1,5 +1,4 @@
-﻿using AzureExercise.Application;
-using AzureExercise.Application.Requests;
+﻿using AzureExercise.Application.Requests;
 using AzureExercise.Models;
 using MediatR;
 using Microsoft.Azure.WebJobs;
@@ -32,7 +31,11 @@ namespace AzureExercise.Functions
             }
             catch (JsonException ex)
             {
-                _logger.LogError($"Failed to deserialize JSON: {ex.Message}");
+                _logger.LogError("Failed to deserialize JSON: {0}", ex.Message);
+            }
+            catch (ContainerNotFoundException ex)
+            {
+                _logger.LogError("The specified container: {0} does not exist", ex.ContainerName);
             }
         }
     }

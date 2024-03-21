@@ -1,4 +1,5 @@
 ﻿using AzureExercise.Application.Requests;
+using AzureExercise.Models;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +25,16 @@ namespace AzureExercise.Functions
         [FunctionName(nameof(HttpFunction))]
         public async Task<IActionResult> ListBlobs([HttpTrigger("get", Route = "listBlobs")] HttpRequest req)
         {
-            var blobs = await _mediator.Send(new ListBlobsQueryRequest());
+            string[] blobs = Array.Empty<string>();
+
+            try
+            {
+                blobs = await _mediator.Send(new ListBlobsQueryRequest());
+            }
+            catch (ContainerNotFoundException ex) 
+            {
+                _logger.LogError(exception: ex, "The specified container: {0} does not exist", ex.ContainerName);
+            }
 
             return new OkObjectResult(blobs);
         }
