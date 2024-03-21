@@ -1,4 +1,5 @@
 ﻿using AzureExercise.Application;
+using AzureExercise.Application.Requests;
 using AzureExercise.Models;
 using MediatR;
 using Microsoft.Azure.WebJobs;
@@ -26,8 +27,8 @@ namespace AzureExercise.Functions
         {
             try
             {
-                var person = JsonSerializer.Deserialize<Customer>(queueItem);
-                await _mediator.Send(new PushToBlobCommand(person));
+                var customer = JsonSerializer.Deserialize<Customer>(queueItem);
+                await _mediator.Send(new PushToBlobCommandRequest(customer));
             }
             catch (JsonException ex)
             {

@@ -1,10 +1,10 @@
 ﻿namespace AzureExercise.Models
 {
-    public class Customer
+    public record Customer
     {
-        public string Name { get; }
-        public string Surname { get; }
-        public int Age { get; }
+        public string Name { get; init; }
+        public string Surname { get; init; }
+        public int Age { get; init; }
 
         public Customer(string name, string surname, int age)
         {

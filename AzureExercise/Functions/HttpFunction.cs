@@ -1,4 +1,4 @@
-﻿using AzureExercise.Application;
+﻿using AzureExercise.Application.Requests;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace AzureExercise.Functions
         [FunctionName(nameof(HttpFunction))]
         public async Task<IActionResult> ListBlobs([HttpTrigger("get", Route = "listBlobs")] HttpRequest req)
         {
-            var blobs = await _mediator.Send(new ListBlobsQuery());
+            var blobs = await _mediator.Send(new ListBlobsQueryRequest());
 
             return new OkObjectResult(blobs);
         }
