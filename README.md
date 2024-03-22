@@ -23,16 +23,16 @@ start azurite --silent & func start
 ```
 
 ## Suggested Usage
-There are two helper functions to help with local usage.
+There are two helper functions, not really a part of the app, developed just for the conveniece of not having to setup containers and publish messages manually.
 
 StartupFunction checks for the necessary container and queue and creates them if needed.
 ```c#
-StartupFunction: [GET] http://localhost:7071/api/startup
+StartupFunction: [POST] http://localhost:7071/api/startup
 ```
 PublishMessageFunction publishes a statically defined message to the queue.
 
 ```c#
-PublishMessageFunction: [GET] http://localhost:7071/api/publishMessage
+PublishMessageFunction: [POST] http://localhost:7071/api/publishMessage
 ```
 
 Once these two were succesfully called the HttpFunction can be called to see existing files:
