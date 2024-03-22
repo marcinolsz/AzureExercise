@@ -25,18 +25,18 @@ namespace AzureExercise.Functions
         [FunctionName(nameof(HttpFunction))]
         public async Task<IActionResult> ListBlobs([HttpTrigger("get", Route = "listBlobs")] HttpRequest req)
         {
-            string[] blobs = Array.Empty<string>();
-
             try
             {
-                blobs = await _mediator.Send(new ListBlobsQueryRequest());
+                var blobs = await _mediator.Send(new ListBlobsQueryRequest());
+                return new OkObjectResult(blobs);
             }
             catch (ContainerNotFoundException ex) 
             {
-                _logger.LogError(exception: ex, "The specified container: {0} does not exist", ex.ContainerName);
+                _logger.LogError("The specified container: {0} does not exist", ex.ContainerName);
+                return new NotFoundResult();
             }
 
-            return new OkObjectResult(blobs);
+            
         }
     }
 }

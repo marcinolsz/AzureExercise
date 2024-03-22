@@ -11,7 +11,7 @@ namespace AzureExercise.Functions.LocalHelperFunctions
     public class StartupFunction
     {
         [FunctionName(nameof(StartupFunction))]
-        public async Task<IActionResult> Startup([HttpTrigger("get", Route = "startup")] HttpRequest req)
+        public async Task<IActionResult> Startup([HttpTrigger("post", Route = "startup")] HttpRequest req)
         {
             var containerClient = new BlobContainerClient("UseDevelopmentStorage=true", "customer-container");
             await containerClient.CreateIfNotExistsAsync();
