@@ -23,7 +23,7 @@ start azurite --silent & func start
 ```
 
 ## Suggested Usage
-There are two helper functions, not really a part of the app, developed just for the conveniece of not having to setup containers and publish messages manually.
+There are two helper functions, not really a part of the app, developed just for the convenience of not having to setup containers and publish messages manually.
 
 StartupFunction checks for the necessary container and queue and creates them if needed.
 ```c#
